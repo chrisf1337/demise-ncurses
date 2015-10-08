@@ -1,0 +1,3 @@
+[submodule "demise-core"]
+	path = demise-core
+	url = https://github.com/chrisf1337/demise-core.git
