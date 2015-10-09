@@ -1,4 +1,4 @@
-set(SRCS )
+set(SRCS editor_view.cpp)
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra")
@@ -29,7 +29,7 @@ include_directories(${NCURSES_INCLUDE_DIR} ${demise-ncurses_SOURCE_DIR}/demise-c
 
 add_definitions(-std=c++14)
 
-add_executable(demise demise.cpp)
+add_executable(demise demise.cpp ${SRCS})
 target_link_libraries(demise ${NCURSES_LIBRARY} ${DEMISE-CORE})
 
 install(TARGETS demise

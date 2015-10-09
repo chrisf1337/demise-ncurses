@@ -1,9 +1,22 @@
-#include "editor.hpp"
+#include <ncurses.h>
 
-using TAP::Editor;
+#include "editor_view.hpp"
+
+using TAP::EditorView;
+
+void init()
+{
+    initscr();
+    cbreak();
+    noecho();
+    keypad(stdscr, TRUE);
+}
 
 int main()
 {
-    Editor editor;
+    init();
+    EditorView editorView;
+    getch();
+    endwin();
     return 0;
 }
