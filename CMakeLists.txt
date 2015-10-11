@@ -1,6 +1,13 @@
 cmake_minimum_required (VERSION 2.6)
 project(demise-ncurses)
+
+if (NOT CMAKE_BUILD_TYPE)
+    SET(CMAKE_BUILD_TYPE "Debug")
+endif()
+
+
 add_subdirectory(demise-core)
+message(STATUS ${DEMISE-CORE_LIB_DIR})
 add_subdirectory(src)
 add_subdirectory(tests)
 

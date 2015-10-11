@@ -4,6 +4,8 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra")
 set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS} -g")
 
+message(STATUS "DEMISE-CORE_LIB_DIR ${DEMISE-CORE_LIB_DIR}")
+
 find_path(NCURSES_INCLUDE_DIR
     NAMES
     ncurses.h
@@ -18,12 +20,16 @@ find_library(NCURSES_LIBRARY
     /usr/local/opt/ncurses/lib
     /usr/lib/x86_64-linux-gnu
     NO_DEFAULT_PATH)
+
 find_library(DEMISE-CORE
     NAMES
     demise-core
     PATHS
+    ${DEMISE-CORE_LIB_DIR}
     ${demise-ncurses_SOURCE_DIR}/demise-core/lib/static
     NO_DEFAULT_PATH)
+
+message(STATUS "demise-core lib path ${DEMISE-CORE}")
 
 include_directories(${NCURSES_INCLUDE_DIR} ${demise-ncurses_SOURCE_DIR}/demise-core/src)
 
