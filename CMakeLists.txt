@@ -5,6 +5,7 @@ if (NOT CMAKE_BUILD_TYPE)
     SET(CMAKE_BUILD_TYPE "Debug")
 endif()
 
+include_directories(spdlog)
 
 add_subdirectory(demise-core)
 message(STATUS ${DEMISE-CORE_LIB_DIR})

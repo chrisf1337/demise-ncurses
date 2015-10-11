@@ -1,7 +1,10 @@
 #ifndef DEMISE_NCURSES_EDITOR_VIEW
 #define DEMISE_NCURSES_EDITOR_VIEW
 
+#include <memory>
+
 #include <ncurses.h>
+#include "spdlog.h"
 
 #include "editor.hpp"
 #include "buffer.hpp"
@@ -26,6 +29,9 @@ public:
 
     int _HEIGHT;
     int _WIDTH;
+
+private:
+    std::unique_ptr<spdlog::logger> _logger;
 };
 }
 
