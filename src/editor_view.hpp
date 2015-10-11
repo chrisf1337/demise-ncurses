@@ -24,6 +24,8 @@ public:
 
     WINDOW *_textWindow;
     WINDOW *_lineNumberWindow;
+    WINDOW *_statusWindow;
+    WINDOW *_commandModeWindow;
 
     int _lineNumberWindowWidth;
 

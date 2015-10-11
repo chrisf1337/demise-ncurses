@@ -17,10 +17,14 @@ EditorView::EditorView()
     _currentBuffer = _editor._currentBuffer;
     assert(_WIDTH > _lineNumberWindowWidth);
 
-    _textWindow = newwin(_HEIGHT, _WIDTH - _lineNumberWindowWidth, 0, _lineNumberWindowWidth);
-    _lineNumberWindow = newwin(_HEIGHT, _lineNumberWindowWidth, 0, 0);
+    _textWindow = newwin(_HEIGHT - 2, _WIDTH - _lineNumberWindowWidth, 0, _lineNumberWindowWidth);
+    _lineNumberWindow = newwin(_HEIGHT - 2, _lineNumberWindowWidth, 0, 0);
+    _statusWindow = newwin(1, _WIDTH, _HEIGHT - 2, 0);
+    _commandModeWindow = newwin(1, _WIDTH, _HEIGHT - 1, 0);
     wrefresh(_textWindow);
     wrefresh(_lineNumberWindow);
+    wrefresh(_statusWindow);
+    wrefresh(_commandModeWindow);
 
     typedef spdlog::sinks::simple_file_sink_mt simpleFileSink;
     _logger = std::make_unique<spdlog::logger>("demise-ncurses",
@@ -32,24 +36,40 @@ EditorView::~EditorView()
 {
     delwin(_textWindow);
     delwin(_lineNumberWindow);
+    delwin(_statusWindow);
+    delwin(_commandModeWindow);
 }
 
 void EditorView::initScreen()
 {
     _currentBuffer = _editor._currentBuffer;
-    if (!_currentBuffer) return;
+    if (_currentBuffer == nullptr) return;
     std::string line;
     size_t numLines = (size_t) _HEIGHT < _currentBuffer->_lineStarts.size() ? _HEIGHT :
         _currentBuffer->_lineStarts.size();
-    _logger->info("test");
+    _logger->info("Current buffer ");
     for (size_t i = 0; i < numLines; ++i)
     {
         size_t currentLineStart = _currentBuffer->_lineStarts[i];
-        size_t nextLineStart = _currentBuffer->_lineStarts[i + 1];
+        size_t nextLineStart;
+        if (i == numLines - 1)
+        {
+            nextLineStart = _currentBuffer->_contents.size() - 1;
+        }
+        else
+        {
+            nextLineStart = _currentBuffer->_lineStarts[i + 1];
+        }
         line = _currentBuffer->rangeToString(InclusiveRange(currentLineStart, nextLineStart - 1));
+        _logger->info("{}", i);
         mvwprintw(_textWindow, i, 0, "%s", line.c_str());
         mvwprintw(_lineNumberWindow, i, 0, "%lu", i + 1);
     }
+    mvwprintw(_statusWindow, 0, 0, "%s", _currentBuffer->_name.c_str());
+    mvwprintw(_commandModeWindow, 0, 0, "Command mode window");
+
     wrefresh(_textWindow);
     wrefresh(_lineNumberWindow);
+    wrefresh(_statusWindow);
+    wrefresh(_commandModeWindow);
 }
