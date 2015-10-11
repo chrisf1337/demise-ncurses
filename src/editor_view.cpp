@@ -22,8 +22,10 @@ EditorView::EditorView()
     wrefresh(_textWindow);
     wrefresh(_lineNumberWindow);
 
-    _logger = std::make_unique<spdlog::logger>("logger",
-                                               std::make_shared<spdlog::sinks::simple_file_sink_mt>("../log/demise.log", true));
+    typedef spdlog::sinks::simple_file_sink_mt simpleFileSink;
+    _logger = std::make_unique<spdlog::logger>("demise-ncurses",
+                                               std::make_shared<simpleFileSink>("../log/demise-ncurses.log",
+                                                                                true));
 }
 
 EditorView::~EditorView()
