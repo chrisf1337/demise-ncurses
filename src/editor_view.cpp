@@ -8,7 +8,7 @@
 #include "utils.hpp"
 
 using TAP::EditorView;
-using Utils::InclusiveRange;
+using TAP::Utils::InclusiveRange;
 
 EditorView::EditorView()
 {
