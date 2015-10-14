@@ -6,9 +6,16 @@
 
 #include "editor_view.hpp"
 #include "utils.hpp"
+#include "editor_action.hpp"
+
+static const int KEY_ESC = 27;
 
 using TAP::EditorView;
 using TAP::Utils::InclusiveRange;
+using TAP::EditorAction;
+using TAP::MoveAction;
+using TAP::InsertAtUserPointAction;
+using TAP::ActionResult;
 
 EditorView::EditorView()
 {
@@ -72,4 +79,19 @@ void EditorView::initScreen()
     wrefresh(_lineNumberWindow);
     wrefresh(_statusWindow);
     wrefresh(_commandModeWindow);
+}
+
+void EditorView::respondToUserInput()
+{
+    int key;
+    assert(_textWindow);
+    while ((key = wgetch(_textWindow)) != KEY_ESC)
+    // while ((key = wgetch(_textWindow)))
+    {
+        _logger->info("{}", key);
+        InsertAtUserPointAction action(&_editor, "abc");
+        ActionResult result = _editor.performAction(action);
+        int intResult = *boost::get<int>(&result);
+        _logger->info("{}", intResult);
+    }
 }

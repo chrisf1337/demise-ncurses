@@ -11,6 +11,7 @@ void init()
     cbreak();
     noecho();
     keypad(stdscr, TRUE);
+    nodelay(stdscr, TRUE);
     refresh();
 }
 
@@ -24,6 +25,7 @@ int main(int argc, char **argv)
         editorView._editor.openFile(file);
     }
     editorView.initScreen();
+    editorView.respondToUserInput();
     getch();
     endwin();
     std::cout << editorView._editor._buffers.size() << std::endl;

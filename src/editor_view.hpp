@@ -18,6 +18,7 @@ public:
     ~EditorView();
 
     void initScreen();
+    void respondToUserInput();
 
     TAP::Editor _editor;
     TAP::Buffer *_currentBuffer;
